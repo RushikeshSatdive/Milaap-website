@@ -1,0 +1,175 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------
+   Milaap design tokens
+   Brand: sage #7B8F42 / light sage #E9EFCF / off-white #F7F8F3
+          charcoal #20241F / white #FFFFFF
+   ------------------------------------------------------------------ */
+:root {
+  --bg: #f7f8f3;
+  --surface: #ffffff;
+  --surface-2: #f1f3ea;
+  --ink: #20241f;
+  --muted: #6b7365;
+  --line: #e3e7d9;
+  --sage: #6f823b;
+  --sage-hover: #5f7031;
+  --sage-soft: #e9efcf;
+  --sage-ink: #46531f;
+  --shadow-color: 32 36 31;
+
+  /* RGB triplets so Tailwind can apply opacity modifiers (e.g. ring-accent/25) */
+  --bg-rgb: 247 248 243;
+  --surface-rgb: 255 255 255;
+  --surface-2-rgb: 241 243 234;
+  --ink-rgb: 32 36 31;
+  --muted-rgb: 107 115 101;
+  --line-rgb: 227 231 217;
+  --sage-rgb: 111 130 59;
+  --sage-hover-rgb: 95 112 49;
+  --sage-soft-rgb: 233 239 207;
+  --sage-ink-rgb: 70 83 31;
+}
+
+.dark {
+  --bg: #151812;
+  --surface: #1e231b;
+  --surface-2: #262c22;
+  --ink: #f1f3ea;
+  --muted: #a4ac99;
+  --line: #333a2d;
+  --sage: #a3b96a;
+  --sage-hover: #b4c97c;
+  --sage-soft: #2b3324;
+  --sage-ink: #dce8b6;
+
+  --bg-rgb: 21 24 18;
+  --surface-rgb: 30 35 27;
+  --surface-2-rgb: 38 44 34;
+  --ink-rgb: 241 243 234;
+  --muted-rgb: 164 172 153;
+  --line-rgb: 51 58 45;
+  --sage-rgb: 163 185 106;
+  --sage-hover-rgb: 180 201 124;
+  --sage-soft-rgb: 43 51 36;
+  --sage-ink-rgb: 220 232 182;
+}
+
+@layer base {
+  * {
+    border-color: var(--line);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-canvas text-ink font-sans antialiased;
+    min-height: 100dvh;
+  }
+
+  /* Visible, consistent focus ring for keyboard users */
+  :focus-visible {
+    outline: 2px solid var(--sage);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: var(--sage-soft);
+    color: var(--sage-ink);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply tracking-tight;
+  }
+}
+
+@layer components {
+  .ml-card {
+    @apply rounded-2xl border border-line bg-surface shadow-soft;
+  }
+  .ml-input {
+    @apply w-full rounded-xl border border-line bg-surface px-3.5 py-2.5 text-[15px] text-ink
+      transition focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25 disabled:opacity-60;
+  }
+  .ml-input::placeholder {
+    color: var(--muted);
+    opacity: 0.72;
+  }
+  .ml-label {
+    @apply mb-1.5 block text-[13px] font-semibold text-ink;
+  }
+  .ml-hint {
+    @apply mt-1.5 text-xs text-muted;
+  }
+  .ml-chip {
+    @apply inline-flex items-center gap-1 rounded-full border border-line bg-surface2 px-2.5 py-1 text-xs font-medium text-ink;
+  }
+  .ml-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: var(--line) transparent;
+  }
+  .ml-scroll::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  .ml-scroll::-webkit-scrollbar-thumb {
+    background: var(--line);
+    border: 3px solid transparent;
+    background-clip: content-box;
+    border-radius: 999px;
+  }
+  .ml-prose p {
+    @apply mb-3 text-[15px] leading-relaxed text-muted;
+  }
+}
+
+/* Reduced motion preference (also toggled manually in Settings) */
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:not(.force-motion) *,
+  html:not(.force-motion) *::before,
+  html:not(.force-motion) *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Prevent horizontal scrolling on small screens */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.sr-only-focusable:focus {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 100;
+  width: auto;
+  height: auto;
+  padding: 10px 16px;
+  clip: auto;
+  white-space: normal;
+  background: var(--surface);
+  color: var(--ink);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
